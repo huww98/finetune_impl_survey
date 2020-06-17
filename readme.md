@@ -55,16 +55,6 @@
 
 ## 四、实验结果
 
-<style>
-    table, td {
-        border: 1px solid #333;
-    }
-
-    td {
-        padding-inline: 10px;
-        text-align: center;
-    }
-</style>
 <table>
     <thead>
         <tr>
