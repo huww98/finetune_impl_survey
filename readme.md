@@ -18,7 +18,7 @@
 
 ## 三、实验方案设计
 
-实验中所有代码均可在https://github.com/huww98/finetune_impl_survey查看。
+实验中所有代码均可在 https://github.com/huww98/finetune_impl_survey 查看。
 
 ### 模型
 
@@ -29,18 +29,18 @@
 ### 实验设置
 
 改变不同的实现细节：
-* 将feature中参数的requires_grad设为False（freeze_feature）
+* 将feature中参数的requires_grad设为False（freeze）
 
   ```
   model.feature.requires_grad_(False)
   ```
   requires_grad设置将通知PyTorch是否需要跟踪该参数的计算，以便在反向传播中为它计算梯度。若设置为False，则在反向传播中不会为它计算梯度。进而在优化过程中不会改变该参数。
 
-* 将全部/部分参数传入optimizer中（not_optimize_feature)
+* 不将feature部分的参数传入optimizer中（not_optimize)
 
   optimizer只对传入其中的参数运行梯度优化算法，未传入的参数在优化过程中应该不会改变。
 
-* 将feature设置为评估模式（eval_mode_feature）
+* 将feature部分设置为评估模式（eval_mode）
 
   ```
   model.feature.eval()
@@ -62,9 +62,9 @@
             <td colspan=3>实验设置
             <td colspan=2>结果
         <tr>
-            <td>freeze_feature
-            <td>not_optimize_feature
-            <td>eval_mode_feature
+            <td>freeze
+            <td>not_optimize
+            <td>eval_mode
             <td>params_changed
             <td>bn_changed
     </thead>
@@ -78,11 +78,11 @@
     </tbody>
 </table>
 
-* 对比实验1-4可知：设置freeze_feature和only_optimize_feature的效果是类似的，其中任意一种都能达到不在优化过程中更新模型参数的效果，两者一起使用也能奏效。但单独使用only_optimize_feature会造成不必要的内存和计算量开销，因为PyTorch依然为那些不需要更新的参数计算了梯度。
+* 对比实验1-4可知：设置freeze和only_optimize的效果是类似的，其中任意一种都能达到不在优化过程中更新模型参数的效果，两者一起使用也能奏效。但单独使用only_optimize会造成不必要的内存和计算量开销，因为PyTorch依然为那些不需要更新的参数计算了梯度。
 
   但是，这两个设置都不能对BN层产生影响。在PyTorch中，BN中的统计量并不属于参数（parameters）而是属于buffer。因此，这些统计量不论如何设置都不会计算梯度，也不会传递给优化器。
 
-* 对比实验4与5，1与6可知：eval_mode_feature设置可固定BN中的统计量，不使用该设置则统计量会发生变化。且该设置的影响与前两个设置是正交的。
+* 对比实验4与5，1与6可知：eval_mode设置可固定BN中的统计量，不使用该设置则统计量会发生变化。且该设置的影响与前两个设置是正交的。
 
 ## 五、结果分析
 
