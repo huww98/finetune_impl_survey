@@ -1,4 +1,4 @@
-# 关于实现细节对模型部分fine-tune行为的影响的调查
+# 关于实现细节对模型微调行为影响的调查
 
 ## 一、背景介绍
 
@@ -37,6 +37,13 @@
   requires_grad设置将通知PyTorch是否需要跟踪该参数的计算，以便在反向传播中为它计算梯度。若设置为False，则在反向传播中不会为它计算梯度。进而在优化过程中不会改变该参数。
 
 * 不将feature部分的参数传入optimizer中（not_optimize)
+
+  ```
+  // No:
+  optimizer = torch.optim.SGD(model.parameters(), lr=0.001)
+  // Yes:
+  optimizer = torch.optim.SGD(model.classifier.parameters(), lr=0.001)
+  ```
 
   optimizer只对传入其中的参数运行梯度优化算法，未传入的参数在优化过程中应该不会改变。
 
