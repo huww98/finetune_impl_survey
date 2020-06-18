@@ -81,7 +81,7 @@
         <tr><td>3<td>No <td>Yes<td>Yes<td>No <td>No
         <tr><td>4<td>Yes<td>Yes<td>Yes<td>No <td>No
         <tr><td>5<td>Yes<td>Yes<td>No <td>No <td>Yes
-        <tr><td>6<td>No <td>No <td>No <td>Yes<td>Yes
+        <tr><td>6<td>No <td>No <td>No <td>Yes<td>Yes</td></tr>
     </tbody>
 </table>
 
